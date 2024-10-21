@@ -16,7 +16,7 @@ class SaleSeeder extends Seeder
     public function run(): void
     {
         $showtimes = Showtime::select('id')->get()->pluck('id');
-        Sale::factory()->count(rand(2000, 7000))
+        Sale::factory()->count(rand(200, 300))
             ->sequence(fn (Sequence $sequence) => [
                 'showtime_id' => $showtimes->random(),
             ])

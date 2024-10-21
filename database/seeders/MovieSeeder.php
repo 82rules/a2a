@@ -162,66 +162,6 @@ class MovieSeeder extends Seeder
                 'title' => 'Ghosts of the Sea',
                 'synopsis' => 'A haunted ship drifts into port, carrying the souls of sailors lost at sea for centuries.'
             ],
-            [
-                'title' => 'Steel City',
-                'synopsis' => 'In a future dystopia, one woman leads a rebellion against the megacorporation ruling her city.'
-            ],
-            [
-                'title' => 'Whispers in the Wind',
-                'synopsis' => 'A young girl can communicate with spirits, and must use her gift to stop a rising evil.'
-            ],
-            [
-                'title' => 'Edge of Forever',
-                'synopsis' => 'An explorer stumbles upon a portal to another dimension, but what he finds there defies all logic.'
-            ],
-            [
-                'title' => 'Cursed Kingdoms',
-                'synopsis' => 'A young prince must lift an ancient curse that has plagued his family for generations.'
-            ],
-            [
-                'title' => 'The Dark Emissary',
-                'synopsis' => 'A mysterious figure appears in a medieval kingdom, sowing dissent and chaos wherever he goes.'
-            ],
-            [
-                'title' => 'Wings of Fire',
-                'synopsis' => 'A legendary dragon and a young warrior team up to defeat a dark sorcerer threatening the realm.'
-            ],
-            [
-                'title' => 'Voices from the Past',
-                'synopsis' => 'A historian uncovers a secret society that has been pulling the strings of history for centuries.'
-            ],
-            [
-                'title' => 'The Phoenix Code',
-                'synopsis' => 'A cryptographer must crack an ancient code to stop a global catastrophe.'
-            ],
-            [
-                'title' => 'The Forbidden Path',
-                'synopsis' => 'A group of adventurers sets out to find a mythical artifact, but the path to it is fraught with danger.'
-            ],
-            [
-                'title' => 'The Shadowed Valley',
-                'synopsis' => 'A family moves to a remote valley, only to discover they are not alone, and something watches from the shadows.'
-            ],
-            [
-                'title' => 'Lost Kingdoms',
-                'synopsis' => 'An archaeologist discovers the ruins of a long-forgotten civilization, but something sinister lurks beneath.'
-            ],
-            [
-                'title' => 'The Eternal Knight',
-                'synopsis' => 'A knight cursed with immortality searches for a way to end his suffering and find peace.'
-            ],
-            [
-                'title' => 'Twilight of the Gods',
-                'synopsis' => 'As the gods begin to fade from existence, one mortal is chosen to restore balance before the world ends.'
-            ],
-            [
-                'title' => 'Riders of the Storm',
-                'synopsis' => 'In a world ravaged by climate disasters, a group of survivors embarks on a dangerous journey to find a new home.'
-            ],
-            [
-                'title' => 'The Silver Crown',
-                'synopsis' => 'A young queen fights to keep her throne as rivals plot against her in a dangerous political game.'
-            ]
         ]);
     }
 }

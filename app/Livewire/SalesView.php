@@ -69,26 +69,33 @@ class SalesView extends Component
     }
     private function trends()
     {
-        $data = $this->base()->select(
-            DB::raw('Date(created_at) as date'),
+        $data = $this->base()
+            ->join('showtimes', 'sales.showtime_id', 'showtimes.id')
+            ->join('theatres', 'showtimes.theatre_id', 'theatres.id')
+            ->select(
+            DB::raw('theatres.name as name'),
             DB::raw('count(*) as count'),
-            DB::raw('sum(cost) as revenue'),
-            DB::raw('sum(chairs) as sales')
+            DB::raw('(sum(showtimes.price)/ 100) as revenue'),
+            DB::raw('sum(showtimes.chairs) as sales')
         )->groupBy(
-            DB::raw('Date(created_at)'),
-        )->orderBy(DB::raw('Date(created_at)'))->get();
+            DB::raw('showtimes.theatre_id'),
+        )->get();
 
 
         $chartData = [
-            'labels' => $data->pluck('date'), // You need to define your labels array here
+            'labels' => $data->pluck('name'), // You need to define your labels array here
             'datasets' => [
+                [
+                    'label' => 'People',
+                    'data' => $data->pluck('sales'),
+                ],
                 [
                     'label' => 'Sales',
                     'data' => $data->pluck('count'),
                 ],
                 [
-                    'label' => 'People',
-                    'data' => $data->pluck('sales'),
+                    'label' => 'Revenue',
+                    'data' => $data->pluck('revenue'),
                 ]
             ]
         ];
