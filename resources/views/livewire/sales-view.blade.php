@@ -10,6 +10,8 @@
                         <button  class="{{ $timeframe === 30 ? 'text-indigo-600' : 'text-gray-700' }}" wire:click="setTimeframe(30)">Last 30 days</button>
                         <button  class="{{ $timeframe === null ? 'text-indigo-600' : 'text-gray-700' }}" wire:click="setTimeframe(null)">All-time</button>
                     </div>
+                    <span>On Day</span>
+                    <input type="date" class="bg-zinc-100 rounded-lg px-2 py-1 " wire:model.live.debounce="date" />
                 </div>
                 <div>
                     <input wire:model.live.debounce="search"  type="text" class="p-3 rounded-lg border border-zinc-200 w-full" placeholder="Movie Search..">

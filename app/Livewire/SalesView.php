@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Movie;
 use App\Models\Sale;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
@@ -12,6 +13,8 @@ class SalesView extends Component
 
     public $timeframe;
     public $search;
+
+    public $date;
 
     public $selected;
 
@@ -56,7 +59,9 @@ class SalesView extends Component
                 $q->where('movies.id',(int) $this->selected);
             });
         }
-        if(!empty($this->timeframe)) {
+        if (!empty($this->date)) {
+            $base =  $base->where(DB::raw('Date(sales.created_at)'), $this->date);
+        } else if(!empty($this->timeframe)) {
             $time = now()->sub($this->timeframe, 'day');
             $base =  $base->whereBetween('sales.created_at', [$time, now()]);
         }
