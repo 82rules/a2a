@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Movie;
 use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
@@ -12,12 +13,36 @@ class SalesView extends Component
     public $timeframe;
     public $search;
 
+    public $selected;
+
+    public $results = [];
+
     public function mount()
     {
         $this->timeframe = 7;
         $this->trends();
     }
 
+    public function updated($field, $value)
+    {
+        if ($field === 'search') {
+            if (!empty($value)) {
+                $this->results = Movie::where('title', 'like', "%$value%")->get()->toArray();
+            } else {
+                $this->clear();
+            }
+        }
+        if ($field === 'selected') {
+            $this->clear();
+        }
+    }
+
+    #[On('clear')]
+    public function clear()
+    {
+        $this->results = [];
+        $this->search = '';
+    }
     public function setTimeframe($amount)
     {
         $this->timeframe = $amount;
@@ -26,9 +51,9 @@ class SalesView extends Component
 
     private function base() {
         $base = Sale::select(DB::raw('count(*) as sales'), DB::raw('sum(cost) as revenue'), DB::raw('sum(chairs) as seats'));
-        if(!empty($this->search)){
+        if(!empty($this->selected)){
             $base = $base->whereHas('showtime.movie', function($q){
-                $q->where('movies.title', 'like', '%'.$this->search.'%');
+                $q->where('movies.id',(int) $this->selected);
             });
         }
         if(!empty($this->timeframe)) {
@@ -91,6 +116,11 @@ class SalesView extends Component
 
         $movies = $this->movieList();
 
-        return view('livewire.sales-view', compact('stats',  'movies'));
+        $movie = null;
+        if (!empty($this->selected)) {
+            $movie = Movie::find((int) $this->selected);
+        }
+
+        return view('livewire.sales-view', compact('stats',  'movies', 'movie'));
     }
 }

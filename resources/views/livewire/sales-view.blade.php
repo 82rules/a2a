@@ -1,8 +1,8 @@
-<main class="mx-auto max-w-5xl">
-    <div class="relative isolate overflow-hidden pt-16">
+<main class="mx-auto max-w-5xl" x-data="{results: $wire.entangle('results'), selected: $wire.entangle('selected').live}">
+    <div class="relative pt-16">
         <!-- Secondary navigation -->
         <header class="pb-4 pt-6 sm:pb-6">
-            <div class="mx-auto flex max-w-7xl flex justify-between">
+            <div class="mx-auto flex max-w-7xl justify-between">
                 <div class="flex  flex-wrap items-center gap-6 px-4 sm:flex-nowrap sm:px-6 lg:px-8">
                     <h1 class="text-base font-semibold leading-7 text-gray-900">Movie Sales</h1>
                     <div class="order-last flex w-full gap-x-8 text-sm font-semibold leading-6 sm:order-none sm:w-auto sm:border-l sm:border-gray-200 sm:pl-6 sm:leading-7">
@@ -12,10 +12,24 @@
                     </div>
                 </div>
                 <div>
-                    <input wire:model.lazy="search"  type="text" class="p-3 rounded-lg border border-zinc-200 w-full" placeholder="Movie Search..">
+                    <input wire:model.live.debounce="search"  type="text" class="p-3 rounded-lg border border-zinc-200 w-full" placeholder="Movie Search..">
+                    <div class="relative">
+                        <div x-show="results && results.length > 0" class="absolute z-100 w-full bg-white shadow divide-y space-y-2 rounded-lg p-4 border max-h-[400px] overflow-y-auto" @click.outside="results = []">
+                            <template x-for="result in results" >
+                                <button class="text-left px-2 py-1 hover:bg-zinc-200" @click="selected= result.id" x-text="result.title"></button>
+                            </template>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
+
+        @if(!empty($movie))
+            <button @click="selected = null" class="bg-zinc-700 text-white px-8 py-2 rounded-xl flex gap-4">
+                <span>{{$movie->title}}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+        @endif
 
         <!-- Stats -->
         <div class="border-b border-b-gray-900/10 lg:border-t lg:border-t-gray-900/5">
@@ -47,7 +61,6 @@
             if(movieChart) {
                 movieChart.destroy();
             }
-            console.log({ h: updated[0] })
             movieChart = new Chart(document.getElementById('chart'), {
                 type: 'bar',
                 data: updated[0],
